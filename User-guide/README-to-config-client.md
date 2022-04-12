@@ -1,4 +1,5 @@
 #I. Common
+
 ###Collect the vpn information before setting the VPN connection
 
 Run this command to collect vpn connect information
@@ -44,11 +45,13 @@ xl2tpd[1]: Forked again by Xelerance (www.xelerance.com) (C) 2006
 xl2tpd[1]: Listening on IP address 0.0.0.0, port 1701
 ```
 #II. Setting via GUI
+
 ###0. Prepare
 
 ```
 sudo apt-get install libreswan network-manager-l2tp  network-manager-l2tp-gnome -y
 ```
+
 ###1. Setting Client
 
 ```
@@ -72,6 +75,7 @@ sudo apt-get install libreswan network-manager-l2tp  network-manager-l2tp-gnome 
 ```
 
 #III. Setting via CLI
+
 ###0. Prepare (Skip this step if your system already have nmcli)
 This setting guide that use the Network-manager CLI (nmcli) to config. If your system don't have nmcli, you should download.
 ```
@@ -90,6 +94,7 @@ sudo ln -s /var/lib/snapd/snap /snap
 snap install network-manager
 snap connections network-manager
 ```
+
 ###1. Create VPN connection
 ```
 sudo nmcli connection add connection.id [vpnName] con-name [vpnName] type VPN vpn-type l2tp ifname -- connection.autoconnect no ipv4.method auto vpn.data "gateway = [vpnServerIP], ipsec-enabled = yes, ipsec-psk = [vpnPSK], mru = 1400, mtu = 1400, password-flags = 0, refuse-chap = no, refuse-mschap = no, refuse-pap = no, require-mppe = no, user = [vpnUser]" vpn.secrets "password=[vpnPassword]"
@@ -124,6 +129,7 @@ https://whatismyipaddress.com/
 - CLI ```curl ifconfig.me.```
 
 #V. Setting auto connect VPN 
+
 ###1. Auto connect on boot
 Use this command to open Network Connections setting
 ```
