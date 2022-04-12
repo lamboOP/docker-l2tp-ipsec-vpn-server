@@ -1,6 +1,10 @@
 #I. Common
 
 ###Collect the vpn information before setting the VPN connection
+Install required service
+``` 
+sudo apt-get install libreswan network-manager-l2tp  network-manager-l2tp-gnome -y
+```
 
 Run this command to collect vpn connect information
 ```
@@ -45,12 +49,6 @@ xl2tpd[1]: Forked again by Xelerance (www.xelerance.com) (C) 2006
 xl2tpd[1]: Listening on IP address 0.0.0.0, port 1701
 ```
 #II. Setting via GUI
-
-###0. Prepare
-
-```
-sudo apt-get install libreswan network-manager-l2tp  network-manager-l2tp-gnome -y
-```
 
 ###1. Setting Client
 
