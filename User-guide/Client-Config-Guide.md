@@ -1,12 +1,12 @@
 #I. Common
 
 ###Collect the vpn information before setting the VPN connection
-Install required service
+Install required service (run on Client)
 ``` 
 sudo apt-get install libreswan network-manager-l2tp  network-manager-l2tp-gnome -y
 ```
 
-Run this command to collect vpn connect information
+Run this command to collect vpn connect information (run on Server)
 ```
 docker logs l2tp-ipsec-vpn-server
 ```
@@ -143,3 +143,44 @@ nm-connection-editor
 <img src="./password_all_user.png" width="450"/>
 
 ###2. Auto retry connect when fail
+
+Use the script "auto_retry.sh" as a service
+
+```
+sudo nano /lib/systemd/system/auto_retry_vpn.service
+```
+
+Paste this 
+```
+[Unit]
+Description=My Shell Script
+
+[Service]
+ExecStart=/$your_path/auto_retry_vpn.sh
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Reload Systemd
+
+```
+sudo systemctl daemon-reload 
+```
+
+Start service
+```
+sudo systemctl start auto_retry_vpn.service
+```
+
+Enable service to auto run on boot
+
+```
+sudo systemctl enable auto_retry_vpn.service
+```
+
+Check service
+
+```
+sudo systemctl status auto_retry_vpn.service
+```

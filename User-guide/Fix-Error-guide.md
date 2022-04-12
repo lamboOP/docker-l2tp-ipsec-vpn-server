@@ -58,3 +58,21 @@ kill -9 <process-id>
 Eg:
 kill -9 527
 ```
+### Fix Error: Fail to up vpn via CLI
+Information
+```
+Error: Connection activation failed: Could not find source connection.
+```
+Solution
+
+- Modify netplan config to use Network-Manager => Add "renderer: NetworkManager"
+```
+network:
+    version: 2
+    renderer: NetworkManager #Add this
+    ethernets:
+        eth0:
+            ...
+    
+```
+Then, ```netplan apply``` and run ```nmcli c up [vpnName]``` again
