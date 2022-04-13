@@ -1,6 +1,6 @@
-#I. Common
+# I. Common
 
-###Collect the vpn information before setting the VPN connection
+### Collect the vpn information before setting the VPN connection
 Install required service (run on Client)
 ``` 
 sudo apt-get install libreswan network-manager-l2tp  network-manager-l2tp-gnome -y
@@ -8,7 +8,7 @@ sudo apt-get install libreswan network-manager-l2tp  network-manager-l2tp-gnome 
 
 Run this command to collect vpn connect information (run on Server)
 ```
-docker logs l2tp-ipsec-vpn-server
+docker logs ipsec-vpn-server
 ```
 
 The information will like this:
@@ -48,9 +48,9 @@ xl2tpd[1]: Inherited by Jeff McAdams, (C) 2002
 xl2tpd[1]: Forked again by Xelerance (www.xelerance.com) (C) 2006
 xl2tpd[1]: Listening on IP address 0.0.0.0, port 1701
 ```
-#II. Setting via GUI
+# II. Setting via GUI
 
-###1. Setting Client
+### 1. Setting Client
 
 ```
 1. Go to Settings -> Network -> VPN. Click the + button.
@@ -72,9 +72,9 @@ xl2tpd[1]: Listening on IP address 0.0.0.0, port 1701
 4. Turn the VPN switch ON.
 ```
 
-#III. Setting via CLI
+# III. Setting via CLI
 
-###0. Prepare (Skip this step if your system already have nmcli)
+### 0. Prepare (Skip this step if your system already have nmcli)
 This setting guide that use the Network-manager CLI (nmcli) to config. If your system don't have nmcli, you should download.
 ```
 APT
@@ -93,7 +93,7 @@ snap install network-manager
 snap connections network-manager
 ```
 
-###1. Create VPN connection
+### 1. Create VPN connection
 ```
 sudo nmcli connection add connection.id [vpnName] con-name [vpnName] type VPN vpn-type l2tp ifname -- connection.autoconnect no ipv4.method auto vpn.data "gateway = [vpnServerIP], ipsec-enabled = yes, ipsec-psk = [vpnPSK], mru = 1400, mtu = 1400, password-flags = 0, refuse-chap = no, refuse-mschap = no, refuse-pap = no, require-mppe = no, user = [vpnUser]" vpn.secrets "password=[vpnPassword]"
 ```
@@ -108,7 +108,7 @@ Eg:
 sudo nmcli connection add connection.id vpnCLI2 con-name vpnCLI2 type VPN vpn-type l2tp ifname -- connection.autoconnect no ipv4.method auto vpn.data "gateway = 54.179.173.198, ipsec-enabled = yes, ipsec-psk = test_psk, mru = 1400, mtu = 1400, password-flags = 0, refuse-chap = no, refuse-mschap = no, refuse-pap = no, require-mppe = no, user = test" vpn.secrets "password=abc@123"
 ```
 
-###2. Enable VPN
+### 2. Enable VPN
 Command
 ```
 nmcli c up [vpnName]
@@ -118,7 +118,7 @@ Eg:
 nmcli c up vpnCLI2
 ```
 
-#IV. Checking
+# IV. Checking
 Once connected, you can verify that your traffic is being routed properly by looking up your IP address on Google. It should say "Your public IP address is Your VPN Server IP".
 
 - Browser: 
@@ -126,9 +126,9 @@ https://whatismyipaddress.com/
 
 - CLI ```curl ifconfig.me.```
 
-#V. Setting auto connect VPN 
+# V. Setting auto connect VPN 
 
-###1. Auto connect on boot
+### 1. Auto connect on boot
 Use this command to open Network Connections setting
 ```
 nm-connection-editor
@@ -142,7 +142,7 @@ nm-connection-editor
 
 <img src="./password_all_user.png" width="450"/>
 
-###2. Auto retry connect when fail
+### 2. Auto retry connect when fail
 
 Use the script "auto_retry.sh" as a service
 
