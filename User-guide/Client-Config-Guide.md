@@ -128,7 +128,7 @@ https://whatismyipaddress.com/
 
 # V. Setting auto connect VPN 
 
-### 1. Auto connect on boot
+### 1. Auto connect on boot Ubuntu
 Use this command to open Network Connections setting
 ```
 nm-connection-editor
@@ -142,7 +142,7 @@ nm-connection-editor
 
 <img src="./password_all_user.png" width="450"/>
 
-### 2. Auto retry connect when fail
+### 2. Auto retry connect when fail on Ubuntu
 
 Use the script "auto_retry.sh" as a service
 
@@ -183,4 +183,62 @@ Check service
 
 ```
 sudo systemctl status auto_retry_vpn.service
+```
+
+### 3. Auto retry connect on MAC OS X (Big Sur)
+#### Script
+```
+mkdir vpn
+cd vpn
+sudo vi autovpn.sh
+-> copy and paste the script
+chmod +x autovpn.sh
+```
+The script. This script exclude the loop because the loop will be configured in launchctl "plist"
+
+#### Launch deamon 
+In Mac OS X, the Launch Daemons are stored inside
+
+`/Library/LaunchDaemons/`
+
+Create a property list file(.plist) here as root user. (Please note there are conventions in naming the plist file which is outside the scope of this article)
+```
+sudo vi /Library/LaunchDaemons/com.autovpn.plist
+```
+Paste this
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>launched.autovpn</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>sh</string>
+		<string>-c</string>
+		<string>/Users/cicd/vpn/autovpn.sh</string>
+	</array>
+	<key>StandardErrorPath</key>
+	<string>/Users/cicd/vpn/auto_retry_vpn.stderr</string>
+	<key>StandardOutPath</key>
+	<string>/Users/cicd/vpn/auto_retry_vpn.stdout</string>
+	<key>StartInterval</key>
+	<integer>30</integer>
+	<key>UserName</key>
+	<string>cicd</string>
+</dict>
+</plist>
+```
+Then, load the plist 
+```
+sudo launchctl load -w /Library/LaunchDaemons/launched.autovpn.plist
+```
+Start 
+```
+sudo launchctl start system/launched.autovpn
+```
+Enable to run on boot
+```
+sudo launchctl start system/launched.autovpn
 ```

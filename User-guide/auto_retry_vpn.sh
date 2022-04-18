@@ -7,7 +7,7 @@
                 echo "Disconnected, trying to reconnect..."
                 (sleep 1s && nmcli con up $CON)
         else
-                echo "Already connected !"
+                echo "Already connected ! ... `date`"
         fi
         sleep 30
    done
