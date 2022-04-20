@@ -50,7 +50,7 @@ xl2tpd[1]: Listening on IP address 0.0.0.0, port 1701
 ```
 # II. Setting via GUI
 
-### 1. Setting Client
+### 1. Ubuntu Server
 
 ```
 1. Go to Settings -> Network -> VPN. Click the + button.
@@ -71,9 +71,11 @@ xl2tpd[1]: Listening on IP address 0.0.0.0, port 1701
 - Click OK, then click Add to save the VPN connection information.
 4. Turn the VPN switch ON.
 ```
+### 2. MAC OS X (Big Sur)
+
 
 # III. Setting via CLI
-
+## Ubuntu Server 20.4
 ### 0. Prepare (Skip this step if your system already have nmcli)
 This setting guide that use the Network-manager CLI (nmcli) to config. If your system don't have nmcli, you should download.
 ```
@@ -185,7 +187,7 @@ Check service
 sudo systemctl status auto_retry_vpn.service
 ```
 
-### 3. Auto retry connect on MAC OS X (Big Sur)
+### 3. Auto retry connect VPN on MAC OS X (Big Sur)
 #### Script
 ```
 mkdir vpn
